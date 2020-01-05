@@ -44,9 +44,10 @@ public class HereMapView extends MapView {
     public HereMapView(Context context) {
         super(context);
 
+        ApplicationContext appContext = new ApplicationContext(context);
         markers = new ArrayList<MapMarker>();
 
-        MapEngine.getInstance().init(context, new OnEngineInitListener() {
+        MapEngine.getInstance().init(appContext, new OnEngineInitListener() {
             @Override
             public void onEngineInitializationCompleted(OnEngineInitListener.Error error) {
                 if (error == OnEngineInitListener.Error.NONE) {
@@ -74,30 +75,30 @@ public class HereMapView extends MapView {
                     setZoomLevel(zoomLevel);
 
                     // Create a gesture listener on marker object
-                    getMapGesture().addOnGestureListener(
-                            new MapGesture.OnGestureListener.OnGestureListenerAdapter() {
-                                @Override
-                                public boolean onMapObjectsSelected(List<ViewObject> objects) {
-                                    for (ViewObject viewObj : objects) {
-                                        if (viewObj.getBaseType() == ViewObject.Type.USER_OBJECT) {
-                                            if (((MapObject) viewObj).getType() == MapObject.Type.MARKER) {
-                                                // At this point we have the originally added
-                                                // map marker, so we can do something with it
-                                                // (like change the visibility, or more
-                                                // marker-specific actions)
-                                                if(((MapMarker) viewObj).isInfoBubbleVisible()){
-                                                    ((MapMarker) viewObj).hideInfoBubble();
-                                                } else {
-                                                    ((MapMarker) viewObj).showInfoBubble();
-                                                }
+                    // getMapGesture().addOnGestureListener(
+                    //         new MapGesture.OnGestureListener.OnGestureListenerAdapter() {
+                    //             @Override
+                    //             public boolean onMapObjectsSelected(List<ViewObject> objects) {
+                    //                 for (ViewObject viewObj : objects) {
+                    //                     if (viewObj.getBaseType() == ViewObject.Type.USER_OBJECT) {
+                    //                         if (((MapObject) viewObj).getType() == MapObject.Type.MARKER) {
+                    //                             // At this point we have the originally added
+                    //                             // map marker, so we can do something with it
+                    //                             // (like change the visibility, or more
+                    //                             // marker-specific actions)
+                    //                             if(((MapMarker) viewObj).isInfoBubbleVisible()){
+                    //                                 ((MapMarker) viewObj).hideInfoBubble();
+                    //                             } else {
+                    //                                 ((MapMarker) viewObj).showInfoBubble();
+                    //                             }
 
-                                            }
-                                        }
-                                    }
-                                    // return false to allow the map to handle this callback also
-                                    return false;
-                                }
-                            });
+                    //                         }
+                    //                     }
+                    //                 }
+                    //                 // return false to allow the map to handle this callback also
+                    //                 return false;
+                    //             }
+                    //         });
 
 
 
